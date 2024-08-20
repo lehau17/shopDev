@@ -2,26 +2,46 @@ import express from 'express'
 import helmet from 'helmet'
 import compression from 'compression'
 import morgan from 'morgan'
+import { Request, Response, NextFunction } from 'express'
 import { checkOverLoad } from './helpers/check.connect'
+import 'dotenv/config'
 
 // create a server
 const app = express()
 
 //config server
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 //connect database and config
 import './db/init.mongo'
+import router from './routes'
+import { ErrorResponse } from './core/error.response'
 checkOverLoad()
 //middleware
 app.use(morgan('dev'))
 app.use(helmet())
 app.use(compression())
-//
+app.use(express.json())
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
+//router
+app.use('/v1/api', router)
 
-app.get('/', (req, res) => {
-  const strResponse = 'hello'
-  res.json(strResponse.repeat(100000))
+//handle error
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const error = new ErrorResponse('Not Found', 404)
+  next(error)
+})
+
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  const statusCodeResponse = error.statusCode || 500
+  res.status(statusCodeResponse).json({
+    status: error.status || 'error',
+    message: error.message || 'Internal Server Error'
+  })
 })
 
 app.listen(PORT, () => {

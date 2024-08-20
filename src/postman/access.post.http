@@ -1,0 +1,42 @@
+@URL_DEV = http://localhost:3000/v1/api/
+
+### sign up
+POST {{URL_DEV}}shop/signup
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+
+{
+  "name": "Shop Tips",
+  "email": "Shop0+0008@gmail.com",
+  "password": "123456"
+}
+
+
+### login
+POST {{URL_DEV}}shop/login
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+
+{
+  "email": "Shop0+0008@gmail.com",
+  "password": "123456"
+}
+
+### logout
+POST {{URL_DEV}}shop/logout
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MTMyOTkwLCJleHAiOjE3MjQzMDU3OTB9.t4wMkNDU8to44JWyAC4EIzXYcpGVTAYJpVhSHLgYmhA
+
+
+### refresh token
+POST {{URL_DEV}}shop/refresh-token
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MTM2Mzg1LCJleHAiOjE3MjQzMDkxODV9.tvPk2yR7wJXTvpVSKEDb_1pREHNzYhMxVjZK4bsgJK8
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MTM2Mzg1LCJleHAiOjE3MjQ3NDExODV9.WZllZ5dbCm5s5AyAliLJO5IeNSx42PK_nkuuhIoF1bk"
+}
