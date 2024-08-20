@@ -15,7 +15,13 @@ class AccessController {
     new Ok({ metadata: await AccessService.logout(req.keyStore as KeyToken) }).send(res)
   }
   refreshToken = async (req: Request, res: Response) => {
-    new Ok({ metadata: await AccessService.refreshToken(req.body.refreshToken) }).send(res)
+    new Ok({
+      metadata: await AccessService.refreshToken(
+        req.refreshToken as string,
+        req.keyStore as KeyToken,
+        req.decodeRefreshToken?.userId as string
+      )
+    }).send(res)
   }
 }
 

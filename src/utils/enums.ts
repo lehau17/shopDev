@@ -8,3 +8,9 @@ export enum ApiKeyPermissions {
   '0002' = '0002',
   '0000' = '0000'
 }
+
+export enum ProductType {
+  ELECTRONICS = 'Electronics',
+  CLOTHING = 'Clothing',
+  FURNITURE = 'Furniture'
+}

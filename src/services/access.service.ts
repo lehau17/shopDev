@@ -9,7 +9,7 @@ import {
   AuthenticationFailureResponse,
   ForbiddenResponse
 } from '~/core/error.response'
-import { KeyToken } from '~/models/keyToken.model'
+import KeyModel, { KeyToken } from '~/models/keyToken.model'
 import { findShopByIdService } from './shop.service'
 const roleShop = {
   SHOP: 'SHOP',
@@ -21,44 +21,40 @@ class AccessService {
   /**
    * refresh token
    */
-  static async refreshToken(refreshToken: string) {
-    const foundKeyToken = await KeyTokenService.findByTokenUsed(refreshToken)
-    console.log(foundKeyToken)
-    if (foundKeyToken) {
-      const { userId } = await verifyToken(refreshToken, foundKeyToken.privateKey)
-      await KeyTokenService.removeByUserId(userId)
-      throw new ForbiddenResponse({ message: 'error occurred. Please relogin' })
-    }
-    const holderKeyToken = await KeyTokenService.findByToken(refreshToken)
-    console.log('check keyTOken>>>', holderKeyToken)
-    if (!holderKeyToken)
+  static async refreshToken(refreshToken: string, keyStore: KeyToken, user_id: string) {
+    if (keyStore.refreshTokenUsed.includes(refreshToken)) {
       throw new AuthenticationFailureResponse({
-        message: 'Shop is not registered'
+        message: 'error occur. Please relogin'
       })
-    const { userId } = await verifyToken(holderKeyToken.refreshToken, holderKeyToken.privateKey)
-    const foundShop = await findShopByIdService(userId)
+    }
+    const foundShop = await findShopByIdService(user_id)
     if (!foundShop) {
       throw new AuthenticationFailureResponse({
         message: 'Shop is not registered'
       })
     }
-    //generate tokens
-    //create two keys
     const tokens = await creteTokenPair(
       { email: foundShop.email, userId: foundShop._id.toString() },
-      holderKeyToken.privateKey
+      keyStore.privateKey
     )
     if (!tokens) {
       throw new BadRequestResponse({ message: 'error Occur in generate tokens' })
     }
-    await holderKeyToken.updateOne({
-      $set: {
-        refreshToken: tokens.refreshToken
+    await KeyModel.findOneAndUpdate(
+      { _id: keyStore._id },
+      {
+        $set: {
+          refreshToken: tokens.refreshToken
+        },
+        $addToSet: {
+          refreshTokenUsed: refreshToken
+        }
       },
-      $addToSet: {
-        refreshTokenUsed: refreshToken
+      {
+        new: true,
+        upset: true
       }
-    })
+    )
     return {
       shop: foundShop,
       tokens

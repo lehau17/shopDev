@@ -45,7 +45,7 @@ class KeyTokenService {
   }
 
   static async findByUserId(userId: string) {
-    return KeyModel.findOne({ user: userId }).lean()
+    return KeyModel.findOne({ user: userId })
   }
 
   static async removeByUserId(userId: string) {
