@@ -7,6 +7,7 @@ export interface IClothing {
   _id: ObjectId
   brand: string
   size: string
+  product_shop: ObjectId
   material: string
 }
 
@@ -21,6 +22,11 @@ const clothingSchema = new Schema<IClothing>(
     },
     material: {
       type: String
+    },
+    product_shop: {
+      type: Schema.Types.ObjectId,
+      ref: 'Shop',
+      required: true
     }
   },
   { timestamps: true, collection: COLLECTION_NAME }

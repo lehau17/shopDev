@@ -15,7 +15,7 @@ const HEADER = {
 
 export const apiKey = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const key = req.headers[HEADER.API_KEY]?.toString()
+    const key = req.headers[HEADER.API_KEY] as string
     if (!key) {
       return res.status(403).json({
         message: 'FORBIDDEN'
@@ -28,6 +28,7 @@ export const apiKey = async (req: Request, res: Response, next: NextFunction) =>
       })
     }
     req.apiKey = apiKey
+    console.log('qua api key')
     next()
   } catch (error) {
     console.log(error)
@@ -47,6 +48,7 @@ export const permissionApiKey = (permission: string) => {
         message: 'Permission denied'
       })
     }
+    console.log('qua permission')
     next()
   }
 }
@@ -129,5 +131,34 @@ export const authenticationV2 = asyncHandler(async (req: Request, res: Response,
     } catch (err) {
       return next(new AuthenticationFailureResponse({ message: 'Invalid userId' }))
     }
+  }
+})
+
+//check access token
+export const authenticationAccessToken = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  const user_id = req.headers[HEADER.CLIENT_ID] as string
+  if (!user_id) {
+    return next(new AuthenticationFailureResponse({ message: 'User_id Invalid request' }))
+  }
+  req.user_id = user_id
+  const keyToken = await KeyTokenService.findByUserId(user_id)
+  if (!keyToken) {
+    return next(new NotFoundResponse({ message: 'Not found keyStore' }))
+  }
+  const accessToken = req.headers[HEADER.AUTHORIZATION] as string
+  if (!accessToken) {
+    return next(new AuthenticationFailureResponse({ message: 'error AccessToken:Invalid request' }))
+  }
+
+  try {
+    const decodeAccessToken = await verifyToken(accessToken, keyToken.privateKey)
+    if (decodeAccessToken.userId !== user_id) {
+      return next(new AuthenticationFailureResponse({ message: 'Invalid userId' }))
+    }
+    req.keyStore = keyToken
+    req.decodeAccessToken = decodeAccessToken
+    return next()
+  } catch (err) {
+    return next(new AuthenticationFailureResponse({ message: 'error decode: Invalid request' }))
   }
 })

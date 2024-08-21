@@ -11,6 +11,7 @@ declare global {
       decodeRefreshToken?: ITokenPayload
       decodeAccessToken?: ITokenPayload
       refreshToken?: string
+      user_id?: string
     }
 
     interface User extends IUser {}

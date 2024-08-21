@@ -1,4 +1,5 @@
 import mongoose, { ObjectId, Schema } from 'mongoose'
+import slugify from 'slugify'
 import { ProductType } from '~/utils/enums'
 
 const DOCUMENT_NAME = 'Product'
@@ -10,10 +11,18 @@ export interface IProduct {
   product_thumb: string
   product_description: string
   product_price: number
+
   product_quantity: number
   product_type: string
   product_shop: ObjectId
   product_attributes: Object
+
+  //bonus
+  product_slug: string //le_trung_hau
+  product_rating_avg: number
+  product_variations: string[]
+  isDraft: boolean
+  isPublished: boolean
 }
 
 const productSchema = new Schema<IProduct>(
@@ -43,16 +52,46 @@ const productSchema = new Schema<IProduct>(
       required: true
     },
     product_shop: {
-      type: Schema,
+      type: Schema.Types.ObjectId,
+      ref: 'Shop',
       required: true
     },
     product_attributes: {
       type: Schema.Types.Mixed,
       required: true
+    },
+    product_slug: {
+      type: String
+    },
+    product_rating_avg: {
+      type: Number,
+      default: 4.5,
+      min: 1,
+      set: (value: number) => Math.round(value * 10) / 10
+    },
+    product_variations: {
+      type: [String],
+      default: []
+    },
+    isDraft: {
+      type: Boolean,
+      default: true,
+      index: true,
+      select: false
+    },
+    isPublished: {
+      type: Boolean,
+      default: false,
+      select: false
     }
   },
   { timestamps: true, collection: COLLECTION_NAME }
 )
+
+productSchema.pre('save', function (next) {
+  this.product_slug = slugify(this.product_name, { lower: true })
+  next()
+})
 
 const ProductModel = mongoose.model(DOCUMENT_NAME, productSchema)
 export default ProductModel

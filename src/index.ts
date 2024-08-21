@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3000
 import './db/init.mongo'
 import router from './routes'
 import { ErrorResponse } from './core/error.response'
+import { configProductTypeRegiter } from './configs/config.prroduct'
 checkOverLoad()
 //middleware
 app.use(morgan('dev'))
@@ -27,6 +28,8 @@ app.use(
     extended: true
   })
 )
+//copnfig model
+configProductTypeRegiter()
 //router
 app.use('/v1/api', router)
 

@@ -8,6 +8,7 @@ export interface IElectronic {
   manufacturer: string
   model: string
   color: string
+  product_shop: ObjectId
 }
 
 const ElectronicSchema = new Schema<IElectronic>(
@@ -21,6 +22,11 @@ const ElectronicSchema = new Schema<IElectronic>(
     },
     color: {
       type: String
+    },
+    product_shop: {
+      type: Schema.Types.ObjectId,
+      ref: 'Shop',
+      required: true
     }
   },
   { timestamps: true, collection: COLLECTION_NAME }

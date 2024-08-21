@@ -1,0 +1,49 @@
+@URL_DEV = http://localhost:3000/v1/api/
+
+### create product
+POST {{URL_DEV}}products/
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MjI5MjIwLCJleHAiOjE3MjQ0MDIwMjB9.fBS9vW_zHwcQIRBWwIqBv_VRADGXhAob0KLN8CxI3KU
+
+{
+  "product_name": "New-Jean",
+    "product_thumb": "http://localhost:3000",
+    "product_description": "Đây là đồ Jean",
+    "product_price": 2000,
+    "product_quantity": 20,
+    "product_type": "Clothing",
+    "product_attributes": {
+      "brand": "Le Trung Hau",
+      "size" : "XL",
+      "material": "Iron"
+    }
+}
+
+
+### get draft
+GET {{URL_DEV}}products/drafts/all
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MjI5MjIwLCJleHAiOjE3MjQ0MDIwMjB9.fBS9vW_zHwcQIRBWwIqBv_VRADGXhAob0KLN8CxI3KU
+
+  
+### get published
+GET {{URL_DEV}}products/published/all
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MjI5MjIwLCJleHAiOjE3MjQ0MDIwMjB9.fBS9vW_zHwcQIRBWwIqBv_VRADGXhAob0KLN8CxI3KU
+
+
+  
+### published one product
+PUT {{URL_DEV}}products/published/66c5d03db54c0964b08627e4
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0MjI5MjIwLCJleHAiOjE3MjQ0MDIwMjB9.fBS9vW_zHwcQIRBWwIqBv_VRADGXhAob0KLN8CxI3KU
+
+  
