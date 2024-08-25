@@ -1,0 +1,57 @@
+@URL_DEV = http://localhost:3000/v1/api/
+
+### create discount
+
+POST  {{URL_DEV}}discounts
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NDE3Njc3LCJleHAiOjE3MjQ1OTA0Nzd9.ZDDjugQCIXR0TUQdbRqTiYiaqK5CLfNLqLhbOm2ux4U
+
+{
+  "discount_name" : "Giảm giá Shoppe",
+  "discount_description" : "Testing",
+  "discount_value": 10000,
+  "discount_code" : "CODE004",
+  "discount_start_date" : "2024-08-25T00:00:00.000Z",
+  "discount_end_date" : "2024-08-30T00:00:00.000Z",
+  "discount_max_uses" : 190,
+  "discount_uses_count" : 200,
+  "discount_applies_to" : "all"
+}
+
+
+
+### remove discount
+
+POST  {{URL_DEV}}discounts/remove
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NDE3Njc3LCJleHAiOjE3MjQ1OTA0Nzd9.ZDDjugQCIXR0TUQdbRqTiYiaqK5CLfNLqLhbOm2ux4U
+
+{
+  "code" : "CODE004"
+}
+
+
+### remove discount
+
+DELETE  {{URL_DEV}}discounts/remove
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NDE3Njc3LCJleHAiOjE3MjQ1OTA0Nzd9.ZDDjugQCIXR0TUQdbRqTiYiaqK5CLfNLqLhbOm2ux4U
+
+{
+  "code" : "CODE004"
+}
+
+
+### get product
+
+GET  {{URL_DEV}}discounts/CODE004/products
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NDE3Njc3LCJleHAiOjE3MjQ1OTA0Nzd9.ZDDjugQCIXR0TUQdbRqTiYiaqK5CLfNLqLhbOm2ux4U

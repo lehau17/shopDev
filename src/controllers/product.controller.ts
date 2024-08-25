@@ -1,9 +1,9 @@
 import { BadRequestResponse } from '~/core/error.response'
-import { publishedOneProduct } from './../models/repositories/product.repository'
 import { Request, Response } from 'express'
 import { Ok } from '~/core/success.response'
 import { ProductFactory } from '~/services/product.service'
 import { ITokenPayload } from '~/types/TokenPayload'
+import core from 'express-serve-static-core'
 class ProductController {
   static async createProduct(req: Request, res: Response) {
     const { userId } = req.decodeAccessToken as ITokenPayload
@@ -14,6 +14,15 @@ class ProductController {
         ...productCreatePayload,
         product_shop: userId
       })
+    }).send(res)
+  }
+
+  static async updateProduct(req: Request, res: Response) {
+    const id = req.params.id
+    const productPayload = req.body
+    new Ok({
+      message: 'Product updated successfully',
+      metadata: await ProductFactory.updateProductType(productPayload.product_type, productPayload, id)
     }).send(res)
   }
 
@@ -58,6 +67,42 @@ class ProductController {
         _id: id,
         user_id: userId
       })
+    }).send(res)
+  }
+
+  static async unPublishedOneProduct(req: Request, res: Response) {
+    const id = req.params.id
+    if (!id) {
+      throw new BadRequestResponse({ message: 'Invalid request' })
+    }
+    const { userId } = req.decodeAccessToken as ITokenPayload
+
+    new Ok({
+      message: 'unPublished Product',
+      metadata: await ProductFactory.unPublishedProduct({
+        _id: id,
+        user_id: userId
+      })
+    }).send(res)
+  }
+
+  static async findAllProduct(req: Request<core.ParamsDictionary, any, any, { [key: string]: string | undefined }>, res: Response) {
+    const { limit, page, sort, ...filter } = req.query
+    new Ok({
+      message: 'fetch all Product',
+      metadata: await ProductFactory.findAllProducts({ limit: Number(limit), page: Number(page), sort, ...filter })
+    }).send(res)
+  }
+
+  static async findProduct(req: Request, res: Response) {
+    const id = req.params.id as string
+    if (!id) {
+      throw new BadRequestResponse({ message: 'Invalid request' })
+    }
+
+    new Ok({
+      message: 'fetch Product',
+      metadata: await ProductFactory.findProduct({ product_id: id })
     }).send(res)
   }
 }

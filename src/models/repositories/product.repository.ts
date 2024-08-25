@@ -1,14 +1,7 @@
+import { Model, SortOrder } from 'mongoose'
 import ProductModel from '../Product.model'
 
-export const findProductIsDraft = async ({
-  filter,
-  limit = 50,
-  page = 0
-}: {
-  filter: Object
-  limit?: number
-  page?: number
-}) => {
+export const findProductIsDraft = async ({ filter, limit = 50, page = 0 }: { filter: Object; limit?: number; page?: number }) => {
   return await ProductModel.find(filter)
     .populate('product_shop', 'name email -_id')
     .skip(page * limit)
@@ -20,16 +13,20 @@ export const findProductIsDraft = async ({
 export const findProductIsPublished = async ({
   filter,
   limit = 50,
-  page = 0
+  page = 0,
+  sort = 'ctime'
 }: {
   filter: Object
   limit?: number
   page?: number
+  sort?: string
 }) => {
+  const sortBy: { [key: string]: SortOrder } = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
   return await ProductModel.find(filter)
     .populate('product_shop', 'name email -_id')
     .skip(page * limit)
     .limit(limit)
+    .sort(sortBy)
     .lean()
     .exec()
 }
@@ -41,4 +38,65 @@ export const publishedOneProduct = async (query: Object) => {
   foundProduct.isPublished = true
   const productUpdated = await foundProduct.save()
   return productUpdated
+}
+
+export const unPublishedOneProduct = async (query: Object) => {
+  const foundProduct = await ProductModel.findOne(query)
+  if (!foundProduct) return null
+  foundProduct.isDraft = true
+  foundProduct.isPublished = false
+  const productUpdated = await foundProduct.save()
+  return productUpdated
+}
+
+export const findByKeyword = async ({ keyword }: { keyword: string }) => {
+  const result = await ProductModel.find(
+    {
+      $text: { $search: keyword }
+    },
+    { score: { $meta: 'textScore' } }
+  ).sort({ score: { $meta: 'textScore' } })
+  return result
+}
+
+export const findAllProducts = async ({
+  limit,
+  page,
+  sort,
+  select,
+  filter
+}: {
+  limit: number
+  page: number
+  sort: { [key: string]: SortOrder }
+  select: Record<string, number>
+  filter: Object
+}) => {
+  const result = await ProductModel.find(filter)
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .sort(sort)
+    .select(select)
+    .lean()
+  return result
+}
+
+export const findProduct = async ({ product_id, unselect }: { product_id: string; unselect: Record<string, number> }) => {
+  const result = await ProductModel.findById(product_id).select(unselect).lean()
+  return result
+}
+
+export const updateProductById = async <T>({
+  _id,
+  model,
+  payload,
+  returnNew = true
+}: {
+  _id: string
+  model: Model<any>
+  payload: Partial<T>
+  returnNew?: boolean
+}) => {
+  const updatedProduct = await model.findByIdAndUpdate(_id, payload, { new: returnNew }).lean()
+  return updatedProduct
 }

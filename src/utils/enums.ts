@@ -14,3 +14,20 @@ export enum ProductType {
   CLOTHING = 'Clothing',
   FURNITURE = 'Furniture'
 }
+
+export enum DiscountType {
+  FIXED_AMOUNT = 'fixed_amount',
+  PERCENTAGE = 'percentage'
+}
+
+export enum DiscountApplyTo {
+  ALL = 'all',
+  SPECIFIC = 'specific'
+}
+
+export enum CartState {
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
+  FAILED = 'failed',
+  PENDING = 'pending'
+}
