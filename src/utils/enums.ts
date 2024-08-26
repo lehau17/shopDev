@@ -31,3 +31,11 @@ export enum CartState {
   FAILED = 'failed',
   PENDING = 'pending'
 }
+
+export enum OrderStatus {
+  PENDING = 'pending',
+  CONFIRMED = 'confirmed',
+  SHIPPING = 'shipping',
+  CANCELLED = 'cancelled',
+  DELIVERED = 'delivered'
+}

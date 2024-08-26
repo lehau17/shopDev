@@ -1,0 +1,39 @@
+@URL_DEV = http://localhost:3000/v1/api/
+
+### create commnet
+POST {{URL_DEV}}comments
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NjQ3MDQ4LCJleHAiOjE3MjQ4MTk4NDh9.CKQHTRIGSPy-iyNddNlY44lWF9UCnqTfLbv2p_z1A_8
+
+{
+ "comment_productId": "66c5b265b803a5f42a2dd7f3",
+ "comment_content": "Test content",
+ "comment_userId": "66c5c397bf86cb78ef720b1f",
+ "comment_parentId" : "66cc271e2532ff03042382dd"
+}
+
+
+
+### get all comment
+
+GET {{URL_DEV}}comments?productId=66c5b265b803a5f42a2dd7f3&parentId=66cc0775c75e273575c86cd2
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NjQ3MDQ4LCJleHAiOjE3MjQ4MTk4NDh9.CKQHTRIGSPy-iyNddNlY44lWF9UCnqTfLbv2p_z1A_8
+
+
+### delete
+
+DELETE  {{URL_DEV}}comments
+Content-Type: application/json; charset=utf-8
+x-api-key: 14548a09e048827c682f31020cc71f1463ab0f2895eea920ad9cf300e370ea614a9773dd3a95cf271435943667ccafd4a98228736f3ba8df644e0114251bb72a
+x-client-id: 66c41e656b024645ecaffcaa
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNob3AwKzAwMDhAZ21haWwuY29tIiwidXNlcklkIjoiNjZjNDFlNjU2YjAyNDY0NWVjYWZmY2FhIiwiaWF0IjoxNzI0NjQ3MDQ4LCJleHAiOjE3MjQ4MTk4NDh9.CKQHTRIGSPy-iyNddNlY44lWF9UCnqTfLbv2p_z1A_8
+
+{
+  "comment_id" : "66cc271e2532ff03042382dd",
+  "product_id": "66c5b265b803a5f42a2dd7f3"
+}

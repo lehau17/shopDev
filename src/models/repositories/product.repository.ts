@@ -1,5 +1,6 @@
 import { Model, SortOrder } from 'mongoose'
 import ProductModel from '../Product.model'
+import { ProductTotalAmountRequest } from '~/types/product.type'
 
 export const findProductIsDraft = async ({ filter, limit = 50, page = 0 }: { filter: Object; limit?: number; page?: number }) => {
   return await ProductModel.find(filter)
@@ -99,4 +100,26 @@ export const updateProductById = async <T>({
 }) => {
   const updatedProduct = await model.findByIdAndUpdate(_id, payload, { new: returnNew }).lean()
   return updatedProduct
+}
+
+export const findProductById = async (_id: string) => {
+  return await ProductModel.findById(_id)
+}
+
+export const checkProductAvailability = async (products: { price: string; quantity: number; product_id: string }[]): Promise<any> => {
+  return Promise.all(
+    products.map(async (product) => {
+      const foundProduct = await findProductById(product.product_id)
+      if (foundProduct) {
+        return {
+          price: foundProduct.product_price,
+          quantity: product.quantity,
+          productId: foundProduct._id.toString(),
+          shopId: foundProduct.product_shop.toString(),
+          name: foundProduct.product_name
+        }
+      }
+      return null
+    })
+  )
 }
