@@ -9,7 +9,7 @@ import commentRouter from './Comment'
 import uploadRouter from './upload'
 
 const router = express.Router()
-
+router.get('/', (req, res) => res.send('Hello World!'))
 router.use('/shop', accessRouter)
 router.use('/products', productRouter)
 router.use('/discounts', discountRoute)
