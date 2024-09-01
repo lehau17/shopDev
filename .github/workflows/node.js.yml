@@ -37,4 +37,7 @@ jobs:
         pm2 delete shopdev-be || true
         pm2 start dist/index.js --name=shopdev-be
       working-directory: ./BE_ShopDEV
-
+      
+    - name: Save PM2 process list
+      run: pm2 save
+      working-directory: ./BE_ShopDEV
