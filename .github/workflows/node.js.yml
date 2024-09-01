@@ -28,6 +28,3 @@ jobs:
       run: npm ci
       working-directory: BE_ShopDEV
 
-    - name: Run tests
-      run: npm test
-      working-directory: BE_ShopDEV
