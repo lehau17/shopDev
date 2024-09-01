@@ -28,3 +28,13 @@ jobs:
       run: npm ci
       working-directory: BE_ShopDEV
 
+     - name: Build TypeScript project
+      run: npm run build
+      working-directory: ./BE_ShopDEV
+
+    - name: Deploy application with PM2
+      run: |
+        pm2 delete shopdev-be || true
+        pm2 start dist/index.js --name=shopdev-be
+      working-directory: ./BE_ShopDEV
+
