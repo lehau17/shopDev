@@ -51,3 +51,10 @@ zscore
 
 
 ### kiến trúc notify
+ - Khắc phục tốc độ khi noti quá lớn : index, phân trang, sharding, cache, bất đồng bộ, 
+ - câu hỏi ? 
+
+ - push : là dữ liêu thông báo tách biệt cả 2 , hạn chế : trễ, nếu số lượng user lớn thì sẽ rất nặng server
+ - pull: đăng nhập thì tự lấy, chủ nhận thông báo khi người dùng muốn, hạn chế: dữ liệu và user lưu chung cái schema, thêm 1 cái req lhi người dùng đănh nhập
+
+ - data structer

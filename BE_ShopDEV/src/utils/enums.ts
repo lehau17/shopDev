@@ -39,3 +39,12 @@ export enum OrderStatus {
   CANCELLED = 'cancelled',
   DELIVERED = 'delivered'
 }
+
+export enum NotiType {
+  ORDER_0001,
+  ORDER_0002,
+  ORDER_0003,
+  PROMOTION_0001,
+  SHOP_0001,
+  PRODUCT_0001
+}

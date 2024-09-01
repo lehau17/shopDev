@@ -16,6 +16,8 @@ import {
   updateProductById
 } from '~/models/repositories/product.repository'
 import { removeFieldNull, selectDataInfo, unSelectDataInfo, updateNestedUpdateParser } from '~/utils/convertData'
+import NotificationService from './Notification.service'
+import { NotiType } from '~/utils/enums'
 
 type ProductRegistry = { [key: string]: typeof Clothing | typeof Electronic }
 export type ProductCreate = Omit<IProduct, '_id' | 'isPublished' | 'isDraft'> & { product_variations?: string[] }
@@ -33,6 +35,7 @@ export class ProductFactory {
     const newProduct = new classRef(payload)
     const productSaved = await newProduct.create()
     if (!productSaved) throw new BadRequestResponse({ message: 'Occur when create Product' })
+
     return {
       product: productSaved
     }
@@ -134,11 +137,22 @@ class Product {
   async createProduct(_id: Schema.Types.ObjectId) {
     const productCreated = await ProductModel.create({ ...this.product, _id })
     if (productCreated) {
-      await createInventory({
-        inven_productId: _id.toString(),
-        inven_shopId: productCreated.product_shop.toString(),
-        inven_stock: productCreated.product_quantity
-      })
+      await Promise.all([
+        await createInventory({
+          inven_productId: _id.toString(),
+          inven_shopId: productCreated.product_shop.toString(),
+          inven_stock: productCreated.product_quantity
+        }),
+        await NotificationService.createNotification({
+          noti_type: NotiType.PRODUCT_0001.toString(),
+          noti_receivedId: 123,
+          noti_senderId: productCreated.product_shop.toString(),
+          noti_options: {
+            shop_name: productCreated.product_shop,
+            product_name: productCreated.product_name
+          }
+        })
+      ])
     }
     return productCreated
   }
