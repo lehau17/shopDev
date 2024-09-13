@@ -2,6 +2,8 @@ import mongoose from 'mongoose'
 import configMongodb from '~/configs/config.mongodb'
 import { checkNumberConnect } from '~/helpers/check.connect'
 const connectString = `mongodb://${configMongodb.db.HOST}:${configMongodb.db.PORT}/${configMongodb.db.NAME}`
+
+//ackitecture signature
 class Database {
   static instance: Database
   constructor() {

@@ -1,7 +1,8 @@
 import { createClient } from 'redis'
 import { promisify } from 'util'
 import { reservationInventory } from '~/models/repositories/inventory.repository'
-const redisClient = createClient()
+import { getRedis } from '~/configs/redis.config'
+const { instanceRedis: redisClient } = getRedis()
 
 const pexprire = promisify(redisClient.pExpire).bind(redisClient)
 const setnxAsync = promisify(redisClient.setNX).bind(redisClient)

@@ -3,7 +3,8 @@ export const StatusCode = {
   BAD_REQUEST: '400',
   AUTHENTICATE: '401',
   NOT_FOUND: '404',
-  FORBIDDEN: '403'
+  FORBIDDEN: '403',
+  SERVER_ERROR: '500'
 }
 
 export const ReasonStatusCode = {
@@ -11,7 +12,9 @@ export const ReasonStatusCode = {
   BAD_REQUEST: 'Bad request error',
   AUTHENTICATE: 'Auth error',
   NOT_FOUND: 'Not found',
-  FORBIDDEN: 'Not role'
+  FORBIDDEN: 'Not role',
+  SERVER_ERROR: 'Invalid server error',
+  REDIS_ERROR: 'Connected fail'
 }
 
 export class ErrorResponse extends Error {
@@ -76,6 +79,17 @@ export class ForbiddenResponse extends ErrorResponse {
   constructor({
     message = ReasonStatusCode.FORBIDDEN,
     statusCode = StatusCode.FORBIDDEN
+  }: {
+    message?: string
+    statusCode?: string | number
+  }) {
+    super(message, statusCode)
+  }
+}
+export class RedisErrorResponse extends ErrorResponse {
+  constructor({
+    message = ReasonStatusCode.REDIS_ERROR,
+    statusCode = StatusCode.SERVER_ERROR
   }: {
     message?: string
     statusCode?: string | number

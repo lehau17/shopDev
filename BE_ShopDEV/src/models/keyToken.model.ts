@@ -19,8 +19,7 @@ var keyTokenSchema = new mongoose.Schema<KeyToken>(
   {
     user: {
       type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Shop'
+      required: true
     },
     publicKey: {
       type: String,

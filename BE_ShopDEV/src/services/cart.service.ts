@@ -8,6 +8,7 @@ import { CartState } from '~/utils/enums'
 
 class CartService {
   static async getCart(user_id: string) {
+    //find in cache
     return CartModel.findOne({ cart_userId: user_id }).lean()
   }
   static async create(body: CartCreateRequestBody) {

@@ -58,3 +58,9 @@ zscore
  - pull: đăng nhập thì tự lấy, chủ nhận thông báo khi người dùng muốn, hạn chế: dữ liệu và user lưu chung cái schema, thêm 1 cái req lhi người dùng đănh nhập
 
  - data structer
+
+
+### sku and spu
+spu: quy chuẩn của đơn vị sản phẩm (Standard Product unit), trong kho có bao nhiêu sản phẩm nhất định
+1spu = N SKU
+sku đơn vị nhỏ nhất tồn kho nhỉ nhất trong cái hệ thống của chúng ta

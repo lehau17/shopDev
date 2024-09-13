@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import { Request, Response, NextFunction } from 'express'
 import { checkOverLoad } from './helpers/check.connect'
 import 'dotenv/config'
-
+import { getRedis, initRedis } from './configs/redis.config'
 // create a server
 const app = express()
 
@@ -14,6 +14,10 @@ const PORT = process.env.PORT || 3000
 
 //connect database and config
 import './db/init.mongo'
+
+//redis
+initRedis()
+//
 import router from './routes'
 import { ErrorResponse } from './core/error.response'
 import { configProductTypeRegiter } from './configs/config.prroduct'
@@ -40,6 +44,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.log('check error handler', error)
   const statusCodeResponse = error.statusCode || 500
   res.status(statusCodeResponse).json({
     status: error.status || 'error',
